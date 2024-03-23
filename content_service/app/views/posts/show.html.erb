@@ -1,0 +1,7 @@
+<!-- app/views/posts/show.html.erb -->
+
+<h1><%= @post.title %></h1>
+<p><%= @post.body %></p>
+<p>Published at: <%= @post.published_at %></p>
+
+<%= link_to 'Back to all posts', posts_path %>
