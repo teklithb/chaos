@@ -1,0 +1,63 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: content-service
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: content-service
+#   template:
+#     metadata:
+#       labels:
+#         app: content-service
+#     spec:
+#       containers:
+#       - name: content-service
+#         image: content-service-1:latest
+#         imagePullPolicy: IfNotPresent
+#         ports:
+#         - containerPort: 3001
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: content-service
+  template:
+    metadata:
+      labels:
+        app: content-service
+    spec:
+      initContainers:
+      - name: migrate
+        image: content-service-1:latest
+        imagePullPolicy: IfNotPresent
+        command: ['bin/rails', 'db:migrate']
+      containers:
+      - name: content-service
+        image: content-service-1:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3001
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-service-service
+spec:
+  type: NodePort
+  selector:
+    app: content-service
+  ports:
+    - protocol: TCP
+      port: 3001
+      targetPort: 3001
+      nodePort: 30006
+

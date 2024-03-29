@@ -1,0 +1,167 @@
+# # version: '3.8'
+
+# # services:
+# #   app:
+# #     image: user-manage
+# #     container_name: laravel-app
+# #     restart: unless-stopped
+# #     tty: true
+# #     ports:
+# #       - "8000:8000"
+# #     environment:
+# #       APP_NAME: Laravel
+# #       APP_ENV: local
+# #       APP_KEY: base64:SomeBase64EncodedKeyHere=
+# #       APP_DEBUG: "true"
+# #       APP_URL: http://localhost
+# #       LOG_CHANNEL: stack
+# #       DB_CONNECTION: mysql
+# #       DB_HOST: ${DB_HOST}   # Using the environment variable here
+# #       DB_PORT: 3306
+# #       DB_DATABASE: laravel
+# #       DB_USERNAME: user
+# #       DB_PASSWORD: password
+# #     volumes:
+# #       - /home/teklithb/chaos/content_service/assignemt-4/:/var/www
+# #     depends_on:
+# #       - db
+
+# #   db:
+# #     image: mysql:5.7
+# #     container_name: laravel-mysql
+# #     restart: unless-stopped
+# #     tty: true
+# #     ports:
+# #       - "3307:3306" # or whatever ports you are mapping
+# #     environment:
+# #       MYSQL_ROOT_PASSWORD: rootpassword # Set root password here
+# #       # MYSQL_USER: user # Only use this if you need a non-root user
+# #       # MYSQL_PASSWORD: password # Password for the non-root user, if you're creating one
+# #       MYSQL_DATABASE: laravel
+# #     volumes:
+# #       - dbdata:/var/lib/mysql
+
+# # volumes:
+# #   dbdata:
+# #     driver: local
+
+# version: '3.8'
+
+# services:
+#   app:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     image: user-manage:latest  # Tagging the built image for your application
+#     container_name: laravel-app
+#     restart: unless-stopped
+#     tty: true
+#     environment:
+#       APP_ENV: local
+#       APP_KEY: base64:SomeBase64EncodedKeyHere=
+#       APP_DEBUG: "true"
+#       APP_URL: http://localhost:8000
+#       LOG_CHANNEL: stack
+#       DB_CONNECTION: mysql
+#       DB_HOST: db
+#       DB_PORT: 3306
+#       DB_DATABASE: laravel
+#       DB_USERNAME: user
+#       DB_PASSWORD: password
+#     volumes:
+#       - ./laravel:/var/www  # Ensure this path correctly maps your Laravel application into the container
+#     depends_on:
+#       - db
+
+#   nginx:
+#     image: nginx:alpine
+#     container_name: laravel-nginx
+#     restart: unless-stopped
+#     ports:
+#       - "8000:80"
+#     volumes:
+#       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+#       - ./laravel/public:/var/www/public:ro  # This maps your Laravel public directory to Nginx's root directory
+#     depends_on:
+#       - app
+
+#   db:
+#     image: mysql:5.7
+#     container_name: laravel-mysql
+#     restart: unless-stopped
+#     tty: true
+#     ports:
+#       - "3307:3306"
+#     environment:
+#       MYSQL_ROOT_PASSWORD: rootpassword
+#       MYSQL_DATABASE: laravel
+#       MYSQL_USER: user
+#       MYSQL_PASSWORD: password
+#     volumes:
+#       - dbdata:/var/lib/mysql
+
+# volumes:
+#   dbdata:
+#     driver: local
+
+
+
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: user-management:latest
+    container_name: laravel-app
+    restart: unless-stopped
+    tty: true
+    environment:
+      APP_ENV: local
+      APP_KEY: base64:kryYkxqpqDP9EW3PjijdoxpckgQtMYrHscHLeFspQLQ=
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8080
+      LOG_CHANNEL: stack
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: laravel
+      DB_USERNAME: user
+      DB_PASSWORD: password
+    volumes:
+      - ./laravel:/var/www
+      
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    container_name: laravel-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./laravel/public:/var/www/public:ro
+    depends_on:
+      - app
+
+  db:
+    image: mysql:5.7
+    container_name: laravel-mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata:
+    driver: local
