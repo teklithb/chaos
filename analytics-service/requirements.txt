@@ -1,0 +1,8 @@
+Django==3.2.12
+psycopg2-binary==2.9.3
+django-health-check==3.16.4
+djangorestframework==3.12.4
+django-cors-headers==3.10.0
+django-debug-toolbar==3.2.2
+django-environ==0.8.1
+djangorestframework-simplejwt==5.0.0

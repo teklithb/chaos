@@ -1,0 +1,353 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload File</title>
+</head>
+<body>
+  <h1>Upload File</h1>
+  <form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" required>
+    <input type="submit" value="Upload">
+  </form>
+</body>
+</html> -->
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload and Download Files</title>
+</head>
+<body>
+  <h1>Upload File</h1>
+  <form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" required>
+    <input type="submit" value="Upload">
+  </form>
+
+  <h2>Files</h2>
+  <ul id="files-list"></ul>
+
+  <script>
+    // Function to fetch and display files
+    async function fetchFiles() {
+      const response = await fetch('/list-files');
+      const files = await response.json();
+      const filesList = document.getElementById('files-list');
+      filesList.innerHTML = ''; // Clear the list
+
+      files.forEach(file => {
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = file.publicUrl;
+        link.textContent = file.name;
+        link.download = file.name;
+        listItem.appendChild(link);
+        filesList.appendChild(listItem);
+      });
+    }
+
+    // Load files on page load
+    window.addEventListener('load', fetchFiles);
+
+    // Reload files list after file upload
+    document.querySelector('form').addEventListener('submit', function(event) {
+      // Prevent the default form submission
+      event.preventDefault();
+
+      // Use FormData to send the uploaded file
+      const formData = new FormData(this);
+      fetch('/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.message); // Or handle the response in your way
+        fetchFiles(); // Refresh the files list
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html> -->
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload and Download Files</title>
+</head>
+<body>
+  <h1>Upload File</h1>
+  <form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" required>
+    <input type="submit" value="Upload">
+  </form>
+
+  <h2>Files</h2>
+  <ul id="files-list"></ul>
+
+  <script>
+    // Function to fetch and display files
+    async function fetchFiles() {
+      const response = await fetch('/list-files');
+      const files = await response.json();
+      const filesList = document.getElementById('files-list');
+      filesList.innerHTML = ''; // Clear the list
+
+      files.forEach(file => {
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        // Point the href to the download route on the server
+        link.href = `/download/${encodeURIComponent(file.name)}`;
+        link.textContent = file.name;
+        link.setAttribute('target', '_blank'); // Open download in a new tab
+        listItem.appendChild(link);
+        filesList.appendChild(listItem);
+      });
+    }
+
+    // Load files on page load
+    window.addEventListener('load', fetchFiles);
+
+    // Reload files list after file upload
+    document.querySelector('form').addEventListener('submit', function(event) {
+      // Prevent the default form submission
+      event.preventDefault();
+
+      // Use FormData to send the uploaded file
+      const formData = new FormData(this);
+      fetch('/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.message); // Or handle the response in your way
+        fetchFiles(); // Refresh the files list
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html> -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload and Manage Files</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    button {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Upload File</h1>
+  <form id="upload-form" enctype="multipart/form-data">
+    <input type="file" name="file" required>
+    <button type="button" onclick="uploadFile()">Upload</button>
+  </form>
+
+  <h2>Files</h2>
+  <ul id="files-list"></ul> -->
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Manage Files</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 700px;
+        margin: auto;
+        overflow: auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 40px;
+      }
+      h1, h2 {
+        color: #444;
+        text-align: center;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      ul li {
+        background: #f9f9f9;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        position: relative;
+      }
+      ul li:last-child {
+        border-bottom: none;
+      }
+      button {
+        cursor: pointer;
+        display: inline-block;
+        background-color: #5cb85c;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        text-transform: capitalize;
+        font-size: 14px;
+      }
+      button:hover {
+        background-color: #4cae4c;
+      }
+      a {
+        color: #337ab7;
+        text-decoration: none;
+        margin-right: 15px;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .file-name {
+        display: inline-block;
+        margin-right: 15px;
+      }
+      .file-action {
+        display: inline;
+      }
+      #upload-form {
+        margin-bottom: 20px;
+      }
+      input[type="file"] {
+        margin-bottom: 10px;
+      }
+      input[type="button"] {
+        cursor: pointer;
+        display: inline-block;
+        background-color: #337ab7;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        text-transform: capitalize;
+        font-size: 14px;
+      }
+      input[type="button"]:hover {
+        background-color: #286090;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Upload File</h1>
+      <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <input type="button" value="Upload" onclick="uploadFile()">
+      </form>
+  
+      <h2>Files</h2>
+      <ul id="files-list"></ul>
+    </div>
+  
+    <script>
+      async function uploadFile() {
+        const form = document.getElementById('upload-form');
+        const formData = new FormData(form);
+        const fileInput = document.querySelector('input[type="file"]');
+        
+        fileInput.disabled = true; // Disable during upload
+  
+        try {
+          let response = await fetch('/upload', { method: 'POST', body: formData });
+  
+          if (response.status === 409) {
+            if (confirm('File already exists. Do you want to overwrite it?')) {
+              formData.append('overwrite', 'true');
+              response = await fetch('/upload', { method: 'POST', body: formData });
+            }
+          }
+  
+          const result = await response.json();
+          alert(result.message);
+        } catch (error) {
+          console.error('Upload failed:', error);
+          alert('Upload failed');
+        } finally {
+          fileInput.disabled = false;
+          fetchFiles(); // Refresh the list
+        }
+      }
+  
+      async function fetchFiles() {
+        const response = await fetch('/list-files');
+        const files = await response.json();
+        const filesList = document.getElementById('files-list');
+        filesList.innerHTML = '';
+  
+        files.forEach(file => {
+          const listItem = document.createElement('li');
+          listItem.innerHTML = `
+            <span class="file-name">${file.name}</span>
+            <div class="file-action">
+              <a href="/download/${encodeURIComponent(file.name)}">Download</a>
+              <button onclick="deleteFile('${file.name}')">Delete</button>
+            </div>
+          `;
+          filesList.appendChild(listItem);
+        });
+      }
+  
+      async function deleteFile(filename) {
+        if (!confirm('Are you sure you want to delete this file?')) return;
+  
+        try {
+          const response = await fetch(`/delete/${encodeURIComponent(filename)}`);
+          const result = await response.text();
+          alert(result);
+          fetchFiles(); // Refresh the list
+        } catch (error) {
+          console.error('Delete failed:', error);
+          alert('Delete failed');
+        }
+      }
+  
+      window.onload = fetchFiles;
+    </script>
+  </body>
+  </html>
+  
