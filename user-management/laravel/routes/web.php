@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,3 +24,4 @@ Auth::routes();
 
 // This route is for the home page after login, which utilizes the HomeController
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

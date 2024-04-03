@@ -11,7 +11,22 @@
     </header>
     <main>
         <p>This is the main content of your analytics service.</p>
-        <!-- You can add more content or dynamic data here -->
+        <!-- Display links to other services dynamically -->
+        <ul>
+            {% for service, url in other_service_urls.items %}
+                <li><a href="{{ url }}">{{ service }}</a></li>
+            {% endfor %}
+        </ul>
+        
+        <!-- Display data from other services dynamically -->
+        <div>
+            <h2>Data from Other Services</h2>
+            <ul>
+                {% for service, data in other_service_data.items %}
+                    <li><strong>{{ service }}</strong>: {{ data }}</li>
+                {% endfor %}
+            </ul>
+        </div>
     </main>
     <footer>
         <p>&copy; 2024 My Analytics Service</p>
