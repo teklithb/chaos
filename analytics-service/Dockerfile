@@ -1,3 +1,5 @@
+
+
 FROM python:3.8
 
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -10,7 +12,11 @@ COPY requirements.txt /app/
 # Install necessary system dependencies
 RUN apt-get update && apt-get install -y \
     libsystemd-dev \
- && rm -rf /var/lib/apt/lists/*
+    curl \
+ && curl -fsSL https://get.docker.com -o get-docker.sh \
+ && sh get-docker.sh \
+ && rm -rf /var/lib/apt/lists/* \
+ && rm get-docker.sh
 
 # Upgrade pip and install Python dependencies
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
@@ -19,4 +25,6 @@ COPY . /app/
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0:8000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+

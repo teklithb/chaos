@@ -109,17 +109,28 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.environ.get('DB_NAME', 'db_1'),  # Default value is 'db_1'
+#         'USER': os.environ.get('DB_USER', 'user'),
+#         'PASSWORD': os.environ.get('DB_PASS', 'user'),
+#         'HOST': os.environ.get('DB_HOST', 'db'),  # Ensure this matches the service name in Docker Compose
+#         'PORT': os.environ.get('DB_PORT', 5432),
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME', 'db_1'),  # Default value is 'db_1'
         'USER': os.environ.get('DB_USER', 'user'),
         'PASSWORD': os.environ.get('DB_PASS', 'user'),
-        'HOST': os.environ.get('DB_SERVICE', 'db'),
+        #'HOST': '172.18.0.2',  # Use the IP address of the db container
+        'HOST': 'db',
         'PORT': os.environ.get('DB_PORT', 5432),
     }
 }
-
 
 
 

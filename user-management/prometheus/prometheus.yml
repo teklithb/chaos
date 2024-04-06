@@ -7,3 +7,47 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['app:9000']  # Use the correct port where your app exposes metrics
+  
+  - job_name: 'content_service'
+    static_configs:
+      - targets: ['content_service_web_1:9000']
+
+  - job_name: 'content-service'
+    static_configs:
+      - targets: ['content-service:3001']  # Use the correct port where your content-service is running
+
+  - job_name: 'medea-service'
+    static_configs:
+      - targets: ['medea-service:3002']  # Use the correct port where your medea-service is running
+    
+
+# scrape_configs:
+#   - job_name: 'laravel'
+#     metrics_path: '/metrics'
+#     scrape_interval: 5s
+#     static_configs:
+#       - targets: ['laravel-app:9000']
+  
+#   - job_name: 'content_service'
+#     static_configs:
+#       - targets: ['content_service_web_1:3001']
+
+#   - job_name: 'medea-service'
+#     static_configs:
+#       - targets: ['medea-service_app_1:3002']
+
+
+# scrape_configs:
+#   - job_name: 'laravel'
+#     scrape_interval: 5s
+#     static_configs:
+#       - targets: ['laravel-app:9000']
+  
+#   - job_name: 'content_service'
+#     static_configs:
+#       - targets: ['content_service_web_1:3001']
+
+#   - job_name: 'medea-service'
+#     static_configs:
+#       - targets: ['medea-service_app_1:3002']
+

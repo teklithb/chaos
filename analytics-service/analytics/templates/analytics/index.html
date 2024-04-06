@@ -27,9 +27,15 @@
                 {% endfor %}
             </ul>
         </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 My Analytics Service</p>
-    </footer>
-</body>
-</html>
+
+        <!-- Display container logs dynamically -->
+        
+    <h2>Container Logs</h2>
+    <ul>
+        {% for container_name, log in container_logs.items %}
+            <li><strong>{{ container_name }}</strong>: {{ log }}</li>
+        {% empty %}
+            <li>No container logs available.</li>
+        {% endfor %}
+    </ul>
+</div>
